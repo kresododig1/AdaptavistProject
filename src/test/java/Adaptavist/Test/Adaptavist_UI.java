@@ -7,6 +7,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -95,6 +97,44 @@ public class Adaptavist_UI {
         Assert.assertEquals(actualMessage, expectedMessage, "Message is NOT correct!!!");
 
         System.out.println("actualMessage = " + actualMessage);
+
+    }
+
+    @Test(testName = "As a user, I should be able to log in with valid credentials", priority = 2)
+    public void Log_In_With_Valid_Credentials(){
+
+        //UserStory02
+
+        // 1st step from TC01 - Go to the home page
+        // - we handle this step in @BeforeMethod
+
+        // 2nd step from TC01 - Click "Sign In" link
+        driver.findElement(By.linkText("Sign In")).click();
+
+        // 3rd step from TCO1 - Enter valid email and password
+        WebElement emailInputBox = driver.findElement(By.cssSelector("input#email"));
+        WebElement passwordInputBox = driver.findElement(By.cssSelector("input#pass"));
+
+        emailInputBox.sendKeys(email, Keys.ENTER);
+        passwordInputBox.sendKeys(password);
+
+        //4th step from TCO1 - Click on "Sign In" button
+        WebElement signInButton = driver.findElement(By.xpath("(//button[@id='send2'])[1]"));
+        signInButton.click();
+
+        // 5th step from TC01 -  "Welcome, Mirko Krolo!" message in top right corner is displayed!
+        WebElement beforeMessage = driver.findElement(By.xpath("(//span[.='Click “Write for us” link in the footer to submit a guest post'])[1]"));
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(beforeMessage));
+
+        WebElement welcomeMessage = driver.findElement(By.xpath("(//li[@class='greet welcome'])[1]"));
+        String actualWelcomeMessage = welcomeMessage.getText();
+        String expectedWelcomeMessage = "Welcome, " + firstName + " " + lastName + "!";
+
+        Assert.assertEquals(actualWelcomeMessage, expectedWelcomeMessage, "Message is NOT correct!!!");
+
+        System.out.println("actualWelcomeMessage = " + actualWelcomeMessage);
 
     }
 
