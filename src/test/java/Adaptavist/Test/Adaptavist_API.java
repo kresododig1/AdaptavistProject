@@ -2,10 +2,14 @@ package Adaptavist.Test;
 
 import io.restassured.http.ContentType;
 
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -43,6 +47,35 @@ public class Adaptavist_API {
 
         response.prettyPrint();
     }
+
+    @Test (priority = 1)
+    public void Create(){
+
+        Map<String, String> bodyRequest = new HashMap<>();
+        bodyRequest.put("name", "morpheus");
+        bodyRequest.put("job", "leader");
+
+        Response response = given().accept(ContentType.JSON)
+                .contentType("application/json")
+                .body(bodyRequest)
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().response();
+
+        response.prettyPrint();
+
+        JsonPath jsonPath = response.jsonPath();
+
+        int id = jsonPath.getInt("id");
+        System.out.println("New user id = " + id);
+
+
+    }
+
+
+
 
 
 }
