@@ -74,6 +74,55 @@ public class Adaptavist_API {
 
     }
 
+    @Test (priority = 2)
+    public void Update_with_Put(){
+
+        String bodyRequest = "{\n" +
+                "    \"name\": \"morpheus\",\n" +
+                "    \"job\": \"zion resident\"\n" +
+                "}";
+
+        JsonPath jsonPath = given().accept(ContentType.JSON)
+                .contentType("application/json")
+                .body(bodyRequest)
+                .when()
+                .put("/2")
+                .then()
+                .statusCode(200)
+                .extract().jsonPath();
+
+        System.out.println("name = " + jsonPath.getString("name"));
+        System.out.println("job = " + jsonPath.getString("job"));
+        System.out.println("updatedAt = " + jsonPath.getString("updatedAt"));
+
+    }
+
+    @Test (priority = 3)
+    public void Update_with_Patch(){
+
+        String bodyRequest = "{\n" +
+                "    \"name\": \"morpheus\",\n" +
+                "    \"job\": \"zion resident\"\n" +
+                "}";
+
+        Response response = given().accept(ContentType.JSON)
+                .contentType("application/json")
+                .body(bodyRequest)
+                .when()
+                .patch("/2")
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        response.prettyPrint();
+
+
+    }
+
+
+
+
+
 
 
 
