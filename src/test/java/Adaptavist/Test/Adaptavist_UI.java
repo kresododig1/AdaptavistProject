@@ -138,6 +138,31 @@ public class Adaptavist_UI {
 
     }
 
+    @Test(testName = "As a user, I should be able to search \"Hero Hoodie\" in a search box", priority = 3)
+    public void Search_Box(){
+
+        //UserStory05
+
+        // 1st step from TC01 - Go to the home page
+        // - we handle this step in @BeforeMethod
+
+        //2nd step - Click on the search box
+        WebElement searchInputBox = driver.findElement(By.cssSelector("input#search"));
+        searchInputBox.click();
+
+        //3rd step from TC01 - Enter "Hero Hoodie" in search box and press enter
+        searchInputBox.sendKeys("Hero Hoodie", Keys.ENTER);
+
+        //4th step from TC01 - "Hero Hoodie" product is displayed!
+        WebElement heroHoodieProduct = driver.findElement(By.xpath("(//a[@href='https://magento.softwaretestingboard.com/hero-hoodie.html'])[2]"));
+        System.out.println("heroHoodieProduct.isDisplayed() = " + heroHoodieProduct.isDisplayed());
+
+        Assert.assertTrue(heroHoodieProduct.isDisplayed(), "Product is NOT displayed!!!");
+
+    }
+
+
+
 
 
 }
