@@ -34,13 +34,20 @@ public class Adaptavist_UI {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://magento.softwaretestingboard.com/");
+        driver.get("https://magento.softwaretestingboard.com");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement acceptBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#accept-btn")));
+        acceptBtn.click();
+
+
+
     }
 
     @AfterMethod
     public void tearDown(){
 
-        driver.close();
+        driver.quit();
     }
 
 
@@ -51,6 +58,7 @@ public class Adaptavist_UI {
 
         // 1st step from TC01 - Go to the home page
         // - we handle this step in @BeforeMethod
+
 
         // 2nd step from TC01 - Click "Create an Account" link
         WebElement createAnAccountLink = driver.findElement(By.linkText("Create an Account"));
@@ -123,12 +131,10 @@ public class Adaptavist_UI {
         signInButton.click();
 
         // 5th step from TC01 -  "Welcome, Mirko Krolo!" message in top right corner is displayed!
-        WebElement beforeMessage = driver.findElement(By.xpath("(//span[.='Click “Write for us” link in the footer to submit a guest post'])[1]"));
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOf(beforeMessage));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//li[@class='greet welcome']/span[contains(text(), 'Welcome,')]"))));
 
-        WebElement welcomeMessage = driver.findElement(By.xpath("(//li[@class='greet welcome'])[1]"));
+        WebElement welcomeMessage = driver.findElement(By.xpath("(//li[@class='greet welcome']/span)[1]"));
         String actualWelcomeMessage = welcomeMessage.getText();
         String expectedWelcomeMessage = "Welcome, " + firstName + " " + lastName + "!";
 
