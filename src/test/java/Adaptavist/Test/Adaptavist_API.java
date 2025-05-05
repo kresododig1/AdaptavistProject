@@ -26,12 +26,12 @@ public class Adaptavist_API {
     }
 
 
+
     @Test (priority = 0)
     public void List_Users(){
 
-
-
         Response response = given().accept(ContentType.JSON)
+                .header("x-api-key", "reqres-free-v1")
                 .queryParam("page", 2)
                 .when()
                 .get()
@@ -57,6 +57,7 @@ public class Adaptavist_API {
 
         Response response = given().accept(ContentType.JSON)
                 .contentType("application/json")
+                .header("x-api-key", "reqres-free-v1")
                 .body(bodyRequest)
                 .when()
                 .post()
@@ -84,6 +85,7 @@ public class Adaptavist_API {
 
         JsonPath jsonPath = given().accept(ContentType.JSON)
                 .contentType("application/json")
+                .header("x-api-key", "reqres-free-v1")
                 .body(bodyRequest)
                 .when()
                 .put("/2")
@@ -107,6 +109,7 @@ public class Adaptavist_API {
 
         Response response = given().accept(ContentType.JSON)
                 .contentType("application/json")
+                .header("x-api-key", "reqres-free-v1")
                 .body(bodyRequest)
                 .when()
                 .patch("/2")
@@ -118,12 +121,6 @@ public class Adaptavist_API {
 
 
     }
-
-
-
-
-
-
 
 
 
